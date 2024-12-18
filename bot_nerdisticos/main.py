@@ -37,6 +37,15 @@ def decrease_score(user_sent):
 # Starting discord Main functions
 TOKEN = sys.argv[1]
 
+async def social_credit(ctx):
+    embed = discord.Embed(
+        title="Social Credit",
+        url="https://en-m-wikipedia-org.translate.goog/wiki/Social_Credit_System?_x_tr_sl=en&_x_tr_tl=pt&_x_tr_hl=pt&_x_tr_pto=tc",
+        description="Change in your social credit",
+        color=0xe66100
+    )
+    embed.set_author(name="Bot nerdistico")
+    await ctx.send(embed=embed)
 
 class MyClient(discord.Client):
     def __init__(self, *, intents: discord.Intents):
