@@ -37,15 +37,15 @@ def decrease_score(user_sent):
 # Starting discord Main functions
 TOKEN = sys.argv[1]
 
-async def social_credit(ctx):
+async def social_credit(interaction, message):
     embed = discord.Embed(
         title="Social Credit",
         url="https://en-m-wikipedia-org.translate.goog/wiki/Social_Credit_System?_x_tr_sl=en&_x_tr_tl=pt&_x_tr_hl=pt&_x_tr_pto=tc",
-        description="Change in your social credit",
+        description=f"Change in {message.author.mention} social credit" ,
         color=0xe66100
     )
     embed.set_author(name="Bot nerdistico")
-    await ctx.send(embed=embed)
+    await interaction.response.send_message(embed=embed)
 
 class MyClient(discord.Client):
     def __init__(self, *, intents: discord.Intents):
@@ -79,6 +79,7 @@ async def upvote(interaction: discord.Interaction, message: discord.Message):
         return
     increase_score(message.author.id)
     await interaction.response.send_message(f'Você upvotou a mensagem de {message.author.mention}', ephemeral=True)
+    social_credit(interaction=interaction, message=message)
 
 
 @client.tree.context_menu(name='Downvote')
@@ -88,6 +89,8 @@ async def downvote(interaction: discord.Interaction, message: discord.Message):
         return
     decrease_score(message.author.id)
     await interaction.response.send_message(f'Você downvotou a mensagem de {message.author.mention}', ephemeral=True)
+    social_credit(interaction=interaction, message=message)
+
 
 
 @bot.hybrid_command(name="checkscore", description="Olhe o seu score e o de outros.")
